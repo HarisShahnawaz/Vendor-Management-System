@@ -48,14 +48,14 @@ export default function VendorsList() {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in text-slate-900">
+    <div className="space-y-6 animate-fade-in text-slate-900 dark:text-white">
       
       {/* Control Top Header Panel Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         {/* Search Input */}
         <div className="relative w-full max-w-sm">
-          <Search className="absolute top-2.5 left-3 h-4 w-4 text-slate-400" />
-          <input type="text" placeholder="Search by name or company..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full rounded-lg border border-slate-300 bg-white pl-9 pr-4 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500 focus:outline-none transition-colors" />
+          <Search className="absolute top-2.5 left-3 h-4 w-4 text-slate-400 dark:text-slate-500" />
+          <input type="text" placeholder="Search by name or company..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#020c1b] pl-9 pr-4 py-2 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:border-teal-500 focus:ring-2 focus:ring-teal-500 focus:outline-none transition-colors" />
         </div>
 
         {/* Create Profile Trigger Button */}
@@ -65,30 +65,30 @@ export default function VendorsList() {
       </div>
 
       {/* Main Data Repository Matrix Grid Table Grid Container Container */}
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0a192f]/40 shadow-sm">
         {loading ? (
-          <div className="p-12 text-center text-slate-500 text-sm">Querying active records stream database...</div>
+          <div className="p-12 text-center text-slate-500 dark:text-slate-400 text-sm">Querying active records stream database...</div>
         ) : filteredVendors.length === 0 ? (
-          <div className="p-12 text-center text-slate-500 text-sm">No synchronized vendor records found matching conditions.</div>
+          <div className="p-12 text-center text-slate-500 dark:text-slate-400 text-sm">No synchronized vendor records found matching conditions.</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-left text-sm">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50/80 text-xs font-bold uppercase tracking-wider text-slate-500">
+                <tr className="border-b border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-[#0a192f]/60 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   <th className="px-6 py-4">Vendor & Company</th>
                   <th className="px-6 py-4">Contact Gateway</th>
                   <th className="px-6 py-4">Physical Location</th>
                   <th className="px-6 py-4 text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200 bg-transparent">
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-transparent">
                 {filteredVendors.map((vendor) => (
-                  <tr key={vendor._id} className="hover:bg-slate-50 transition-colors group cursor-pointer" onClick={() => setSelectedVendor(vendor)}>
+                  <tr key={vendor._id} className="hover:bg-slate-50 dark:hover:bg-[#0a192f]/60 transition-colors group cursor-pointer" onClick={() => setSelectedVendor(vendor)}>
                     <td className="px-6 py-4.5">
-                      <div className="font-semibold text-slate-900 text-base mb-0.5">{vendor.companyName}</div>
-                      <div className="text-xs text-slate-600 font-medium tracking-wide">Rep: {vendor.name}</div>
+                      <div className="font-semibold text-slate-900 dark:text-white text-base mb-0.5">{vendor.companyName}</div>
+                      <div className="text-xs text-slate-600 dark:text-slate-400 font-medium tracking-wide">Rep: {vendor.name}</div>
                     </td>
-                    <td className="px-6 py-4.5 space-y-1 text-xs text-slate-600">
+                    <td className="px-6 py-4.5 space-y-1 text-xs text-slate-600 dark:text-slate-400">
                       <div className="flex items-center gap-2">
                         <Mail className="h-3.5 w-3.5 text-teal-600/70" /> {vendor.email}
                       </div>
@@ -96,9 +96,9 @@ export default function VendorsList() {
                         <Phone className="h-3.5 w-3.5 text-teal-600/70" /> {vendor.contactNumber}
                       </div>
                     </td>
-                    <td className="px-6 py-4.5 text-xs text-slate-600">
+                    <td className="px-6 py-4.5 text-xs text-slate-600 dark:text-slate-400">
                       <div className="flex items-start gap-1.5 max-w-xs">
-                        <MapPin className="h-4 w-4 text-slate-400 mt-0.5 shrink-0" />
+                        <MapPin className="h-4 w-4 text-slate-400 dark:text-slate-500 mt-0.5 shrink-0" />
                         <span>{vendor.address}</span>
                       </div>
                     </td>
@@ -109,7 +109,7 @@ export default function VendorsList() {
                             e.stopPropagation();
                             setSelectedVendor(vendor);
                           }}
-                          className="p-2 text-slate-500 hover:text-teal-600 rounded-lg hover:bg-teal-50 transition-all duration-200" 
+                          className="p-2 text-slate-500 dark:text-slate-400 hover:text-teal-600 rounded-lg hover:bg-teal-50 dark:hover:bg-teal-900/30 transition-all duration-200" 
                           title="View Details"
                         >
                           <Eye className="h-4 w-4" />
@@ -119,7 +119,7 @@ export default function VendorsList() {
                             e.stopPropagation();
                             handleDelete(vendor._id);
                           }}
-                          className="p-2 text-slate-500 hover:text-red-600 rounded-lg hover:bg-red-50 transition-all duration-200" 
+                          className="p-2 text-slate-500 dark:text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 transition-all duration-200" 
                           title="Delete Profile"
                         >
                           <Trash2 className="h-4 w-4" />

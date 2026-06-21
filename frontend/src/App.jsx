@@ -6,6 +6,7 @@ import QuotationList from './components/QuotationList'; // 1. IMPORT QUOTATION H
 
 function App() {
   const [currentTab, setCurrentTab] = useState('dashboard');
+  const [darkMode, setDarkMode] = useState(false);
   const [stats, setStats] = useState({
     totalVendors: 0,
     activeQuotations: 0,
@@ -14,6 +15,15 @@ function App() {
     recentActivities: []
   });
   const [loading, setLoading] = useState(true);
+
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+    if (!darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
 
   const fetchDashboardStats = async () => {
     try {
@@ -36,15 +46,15 @@ function App() {
   }, [currentTab]);
 
   return (
-    <Layout currentTab={currentTab} setCurrentTab={setCurrentTab}>
+    <Layout currentTab={currentTab} setCurrentTab={setCurrentTab} darkMode={darkMode} toggleTheme={toggleTheme}>
       
       {/* 1. DASHBOARD COMPONENT SEGMENT */}
       {currentTab === 'dashboard' && (
         <div className="space-y-8 animate-fade-in">
-          <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
-            <div className="absolute top-0 right-0 -mt-4 -mr-4 h-32 w-32 rounded-full bg-teal-100 blur-2xl"></div>
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">Welcome Back Portal Engine 👋</h2>
-            <p className="text-slate-600 text-sm max-w-3xl leading-relaxed">
+          <div className="relative overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0a192f]/40 p-8 shadow-sm">
+            <div className="absolute top-0 right-0 -mt-4 -mr-4 h-32 w-32 rounded-full bg-teal-100 dark:bg-teal-900/30 blur-2xl"></div>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">Welcome Back Portal Engine 👋</h2>
+            <p className="text-slate-600 dark:text-slate-400 text-sm max-w-3xl leading-relaxed">
               Coordinate enterprise procurement, track vendor verification streams, evaluate incoming cost estimates side-by-side, and approve optimal quotation allocations seamlessly.
             </p>
           </div>
@@ -58,28 +68,28 @@ function App() {
             ].map((card, idx) => {
               const Icon = card.icon;
               return (
-                <div key={idx} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm hover:border-teal-300 transition-all duration-300">
+                <div key={idx} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0a192f]/40 p-5 shadow-sm hover:border-teal-300 dark:hover:border-teal-600 transition-all duration-300">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-semibold tracking-wider text-slate-500 uppercase">{card.label}</span>
+                    <span className="text-xs font-semibold tracking-wider text-slate-500 dark:text-slate-400 uppercase">{card.label}</span>
                     <Icon className={`h-5 w-5 ${card.color}`} />
                   </div>
-                  <p className="text-xl font-bold text-slate-900 tracking-tight">
-                    {loading ? <span className="text-sm font-normal text-slate-500 animate-pulse">Loading...</span> : card.count}
+                  <p className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
+                    {loading ? <span className="text-sm font-normal text-slate-500 dark:text-slate-400 animate-pulse">Loading...</span> : card.count}
                   </p>
                 </div>
               );
             })}
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h3 className="text-sm font-bold tracking-wider text-slate-900 uppercase mb-4 flex items-center gap-2">
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0a192f]/40 p-6 shadow-sm">
+            <h3 className="text-sm font-bold tracking-wider text-slate-900 dark:text-white uppercase mb-4 flex items-center gap-2">
               <Clock className="h-4 w-4 text-teal-600" /> Live System Logistics Pipeline
             </h3>
             
             {loading ? (
-              <div className="p-8 text-center text-slate-500 text-sm">Synchronizing live history feeds...</div>
+              <div className="p-8 text-center text-slate-500 dark:text-slate-400 text-sm">Synchronizing live history feeds...</div>
             ) : stats.recentActivities.length === 0 ? (
-              <div className="border border-dashed border-slate-300 rounded-lg p-8 text-center text-slate-500 text-sm">
+              <div className="border border-dashed border-slate-300 dark:border-slate-700 rounded-lg p-8 text-center text-slate-500 dark:text-slate-400 text-sm">
                 No recent quotation activities or vendor logs registered yet.
               </div>
             ) : (
@@ -89,28 +99,28 @@ function App() {
                     <li key={activity.id}>
                       <div className="relative pb-8">
                         {actIdx !== stats.recentActivities.length - 1 ? (
-                          <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-slate-200" aria-hidden="true" />
+                          <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-slate-200 dark:bg-slate-700" aria-hidden="true" />
                         ) : null}
                         <div className="relative flex space-x-3">
                           <div>
-                            <span className={`h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white ${
-                              activity.status === 'Approved' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' :
-                              activity.status === 'Rejected' ? 'bg-red-50 text-red-600 border border-red-200' :
-                              'bg-amber-50 text-amber-600 border border-amber-200'
+                            <span className={`h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white dark:ring-[#0a192f] ${
+                              activity.status === 'Approved' ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-700' :
+                              activity.status === 'Rejected' ? 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-700' :
+                              'bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-700'
                             }`}>
                               <ArrowUpRight className="h-4 w-4" />
                             </span>
                           </div>
                           <div className="flex-1 min-w-0 pt-1.5 flex justify-between space-x-4">
                             <div>
-                              <p className="text-sm text-slate-800">{activity.text}</p>
+                              <p className="text-sm text-slate-800 dark:text-slate-300">{activity.text}</p>
                             </div>
-                            <div className="text-right text-xs whitespace-nowrap text-slate-500 space-y-1">
-                              <div className="font-bold text-slate-900">${activity.amount.toLocaleString()}</div>
+                            <div className="text-right text-xs whitespace-nowrap text-slate-500 dark:text-slate-400 space-y-1">
+                              <div className="font-bold text-slate-900 dark:text-white">${activity.amount.toLocaleString()}</div>
                               <span className={`inline-flex items-center rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
-                                activity.status === 'Approved' ? 'bg-emerald-50 text-emerald-700 ring-emerald-200' :
-                                activity.status === 'Rejected' ? 'bg-red-50 text-red-700 ring-red-200' :
-                                'bg-amber-50 text-amber-700 ring-amber-200'
+                                activity.status === 'Approved' ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 ring-emerald-200 dark:ring-emerald-700' :
+                                activity.status === 'Rejected' ? 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 ring-red-200 dark:ring-red-700' :
+                                'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 ring-amber-200 dark:ring-amber-700'
                               }`}>
                                 {activity.status}
                               </span>
