@@ -54,35 +54,35 @@ export default function QuotationForm({ onClose, onQuotationAdded }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="w-full max-w-lg rounded-xl border border-[#1e2d42] bg-[#0a192f] p-6 shadow-2xl text-[#f5f5dc]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+      <div className="w-full max-w-lg rounded-xl border border-slate-200 bg-white p-6 shadow-2xl text-slate-900">
         
-        <div className="flex items-center justify-between border-b border-[#1e2d42] pb-4 mb-4">
-          <h3 className="text-md font-bold uppercase tracking-wider text-white">Log Vendor Quotation</h3>
-          <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-4 mb-4">
+          <h3 className="text-md font-bold uppercase tracking-wider text-slate-900">Log Vendor Quotation</h3>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-900 transition-colors">
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        {error && <div className="mb-4 rounded-lg bg-red-500/10 border border-red-500/20 p-3 text-xs text-red-400">{error}</div>}
+        {error && <div className="mb-4 rounded-lg bg-red-50 border border-red-200 p-3 text-xs text-red-700">{error}</div>}
 
         <form onSubmit={handleSubmit} className="space-y-4 text-sm">
           <div>
-            <label className="block text-xs font-semibold uppercase text-slate-400 mb-1.5">Procurement Title / Requirement Scope</label>
-            <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="e.g. Office Server Hardware Procurement" className="w-full rounded-lg border border-[#1e2d42] bg-[#020c1b] px-3.5 py-2 text-white placeholder-slate-600 focus:border-[#14b8a6] focus:outline-none" />
+            <label className="block text-xs font-semibold uppercase text-slate-500 mb-1.5">Procurement Title / Requirement Scope</label>
+            <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="e.g. Office Server Hardware Procurement" className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-slate-900 placeholder-slate-400 focus:border-teal-500 focus:outline-none" />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase text-slate-400 mb-1.5">Description Specs</label>
-            <textarea name="description" rows="2" value={formData.description} onChange={handleChange} placeholder="Detail specifications, scope matrix bounds, or logistics conditions..." className="w-full rounded-lg border border-[#1e2d42] bg-[#020c1b] px-3.5 py-2 text-white placeholder-slate-600 focus:border-[#14b8a6] focus:outline-none resize-none"></textarea>
+            <label className="block text-xs font-semibold uppercase text-slate-500 mb-1.5">Description Specs</label>
+            <textarea name="description" rows="2" value={formData.description} onChange={handleChange} placeholder="Detail specifications, scope matrix bounds, or logistics conditions..." className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-slate-900 placeholder-slate-400 focus:border-teal-500 focus:outline-none resize-none"></textarea>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase text-slate-400 mb-1.5">Select Vendor Entity</label>
-            <select name="vendorId" value={formData.vendorId} onChange={handleChange} className="w-full rounded-lg border border-[#1e2d42] bg-[#020c1b] px-3.5 py-2 text-white focus:border-[#14b8a6] focus:outline-none">
+            <label className="block text-xs font-semibold uppercase text-slate-500 mb-1.5">Select Vendor Entity</label>
+            <select name="vendorId" value={formData.vendorId} onChange={handleChange} className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-slate-900 focus:border-teal-500 focus:outline-none">
               <option value="">-- Choose onboarded supplier --</option>
               {vendors.map((v) => (
-                <option key={v._id} value={v._id} className="bg-[#0a192f]">
+                <option key={v._id} value={v._id} className="bg-white">
                   {v.companyName} (Rep: {v.name})
                 </option>
               ))}
@@ -91,20 +91,20 @@ export default function QuotationForm({ onClose, onQuotationAdded }) {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-xs font-semibold uppercase text-slate-400 mb-1.5">Internal Ref Code</label>
-              <input type="text" name="vendorReference" value={formData.vendorReference} onChange={handleChange} placeholder="REF-XXXX" className="w-full rounded-lg border border-[#1e2d42] bg-[#020c1b] px-3.5 py-2 text-white placeholder-slate-600 focus:border-[#14b8a6] focus:outline-none" />
+              <label className="block text-xs font-semibold uppercase text-slate-500 mb-1.5">Internal Ref Code</label>
+              <input type="text" name="vendorReference" value={formData.vendorReference} onChange={handleChange} placeholder="REF-XXXX" className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-slate-900 placeholder-slate-400 focus:border-teal-500 focus:outline-none" />
             </div>
             <div>
-              <label className="block text-xs font-semibold uppercase text-slate-400 mb-1.5">Quotation Amount ($)</label>
-              <input type="number" name="quotationAmount" value={formData.quotationAmount} onChange={handleChange} placeholder="0.00" className="w-full rounded-lg border border-[#1e2d42] bg-[#020c1b] px-3.5 py-2 text-white placeholder-slate-600 focus:border-[#14b8a6] focus:outline-none" />
+              <label className="block text-xs font-semibold uppercase text-slate-500 mb-1.5">Quotation Amount ($)</label>
+              <input type="number" name="quotationAmount" value={formData.quotationAmount} onChange={handleChange} placeholder="0.00" className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-slate-900 placeholder-slate-400 focus:border-teal-500 focus:outline-none" />
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 border-t border-[#1e2d42] pt-4 mt-6">
-            <button type="button" onClick={onClose} className="rounded-lg bg-[#172a45] px-4 py-2 text-xs font-semibold hover:bg-[#1e2d42] text-slate-300">
+          <div className="flex justify-end gap-3 border-t border-slate-200 pt-4 mt-6">
+            <button type="button" onClick={onClose} className="rounded-lg bg-slate-100 px-4 py-2 text-xs font-semibold hover:bg-slate-200 text-slate-700">
               Cancel
             </button>
-            <button type="submit" disabled={loading} className="rounded-lg bg-[#0f766e] border border-[#14b8a6]/40 px-5 py-2 text-xs font-bold text-white hover:bg-[#115e59]">
+            <button type="submit" disabled={loading} className="rounded-lg bg-teal-600 border border-teal-600 px-5 py-2 text-xs font-bold text-white hover:bg-teal-700 shadow-sm">
               {loading ? 'Submitting Bid...' : 'File Quotation'}
             </button>
           </div>
