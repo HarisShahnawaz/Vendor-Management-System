@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
-export default function VendorForm({ onClose, onVendorAdded }) {
+export default function VendorForm({ onClose, onVendorAdded, vendorToEdit, onVendorUpdated }) {
   const [formData, setFormData] = useState({
-    name: '',
-    companyName: '',
-    email: '',
-    contactNumber: '',
-    address: ''
+    name: vendorToEdit?.name || '',
+    companyName: vendorToEdit?.companyName || '',
+    email: vendorToEdit?.email || '',
+    contactNumber: vendorToEdit?.contactNumber || '',
+    address: vendorToEdit?.address || ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const isEditing = !!vendorToEdit;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,16 +21,43 @@ export default function VendorForm({ onClose, onVendorAdded }) {
     e.preventDefault();
     setError('');
 
-    // Basic Validation Check
-    if (!formData.name || !formData.companyName || !formData.email || !formData.contactNumber || !formData.address) {
-      setError('Please fill in all fields.');
+    // Enhanced Validation
+    if (!formData.name.trim()) {
+      setError('Contact name is required.');
+      return;
+    }
+    if (!formData.companyName.trim()) {
+      setError('Company name is required.');
+      return;
+    }
+    if (!formData.email.trim()) {
+      setError('Email is required.');
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (!formData.contactNumber.trim()) {
+      setError('Contact number is required.');
+      return;
+    }
+    if (!formData.address.trim()) {
+      setError('Business address is required.');
       return;
     }
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/vendors', {
-        method: 'POST',
+      const url = isEditing 
+        ? `http://localhost:5000/api/vendors/${vendorToEdit._id}`
+        : 'http://localhost:5000/api/vendors';
+      
+      const method = isEditing ? 'PUT' : 'POST';
+      
+      const response = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
@@ -37,8 +65,12 @@ export default function VendorForm({ onClose, onVendorAdded }) {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'Failed to submit form');
 
-      onVendorAdded(data); // Refresh the parent table instantly
-      onClose(); // Hide modal
+      if (isEditing) {
+        onVendorUpdated(data);
+      } else {
+        onVendorAdded(data);
+      }
+      onClose();
     } catch (err) {
       setError(err.message);
     } finally {
@@ -52,7 +84,9 @@ export default function VendorForm({ onClose, onVendorAdded }) {
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-4">
-          <h3 className="text-md font-bold uppercase tracking-wider text-slate-900 dark:text-white">Onboard New Vendor</h3>
+          <h3 className="text-md font-bold uppercase tracking-wider text-slate-900 dark:text-white">
+            {isEditing ? 'Edit Vendor Profile' : 'Onboard New Vendor'}
+          </h3>
           <button onClick={onClose} className="text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">
             <X className="h-5 w-5" />
           </button>
@@ -97,7 +131,7 @@ export default function VendorForm({ onClose, onVendorAdded }) {
               Cancel
             </button>
             <button type="submit" disabled={loading} className="rounded-lg bg-teal-600 border border-teal-600 px-5 py-2 text-xs font-bold text-white hover:bg-teal-700 shadow-sm transition-colors disabled:opacity-50">
-              {loading ? 'Onboarding...' : 'Save Profile'}
+              {loading ? (isEditing ? 'Updating...' : 'Onboarding...') : (isEditing ? 'Update Profile' : 'Save Profile')}
             </button>
           </div>
         </form>

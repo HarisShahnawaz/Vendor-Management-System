@@ -1,4 +1,8 @@
 @import "tailwindcss";
 
-/* Paste this exact directive right here */
-@custom-variant dark (&:where(.dark, .dark *));
+@theme {
+  --animate-fade-in: fade-in 0.3s ease-out;
+}
+
+/* Configure Tailwind v4 to trigger dark: utility classes when the .dark class is on the html tag */
+@variant dark (&:where(.dark, .dark *));

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Search, Trash2, Mail, Phone, MapPin, Eye } from 'lucide-react';
+import { Plus, Search, Trash2, Mail, Phone, MapPin, Eye, Edit } from 'lucide-react';
 import VendorForm from './VendorForm';
 import ViewVendorModal from './ViewVendorModal';
 
@@ -9,6 +9,7 @@ export default function VendorsList() {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectedVendor, setSelectedVendor] = useState(null);
+  const [vendorToEdit, setVendorToEdit] = useState(null);
 
   // Fetch all vendor profiles
   const fetchVendors = async () => {
@@ -45,6 +46,15 @@ export default function VendorsList() {
 
   const handleVendorAdded = (newVendor) => {
     setVendors([newVendor, ...vendors]);
+  };
+
+  const handleVendorUpdated = (updatedVendor) => {
+    setVendors(vendors.map(v => v._id === updatedVendor._id ? updatedVendor : v));
+  };
+
+  const handleEdit = (vendor) => {
+    setVendorToEdit(vendor);
+    setShowForm(true);
   };
 
   return (
@@ -117,6 +127,16 @@ export default function VendorsList() {
                         <button 
                           onClick={(e) => {
                             e.stopPropagation();
+                            handleEdit(vendor);
+                          }}
+                          className="p-2 text-slate-500 dark:text-slate-400 hover:text-amber-600 rounded-lg hover:bg-amber-50 dark:hover:bg-amber-900/30 transition-all duration-200" 
+                          title="Edit Profile"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </button>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
                             handleDelete(vendor._id);
                           }}
                           className="p-2 text-slate-500 dark:text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 transition-all duration-200" 
@@ -136,7 +156,15 @@ export default function VendorsList() {
 
       {/* Conditional Form Modal Portal Shell Insertion Render */}
       {showForm && (
-        <VendorForm onClose={() => setShowForm(false)} onVendorAdded={handleVendorAdded} />
+        <VendorForm 
+          onClose={() => {
+            setShowForm(false);
+            setVendorToEdit(null);
+          }} 
+          onVendorAdded={handleVendorAdded}
+          vendorToEdit={vendorToEdit}
+          onVendorUpdated={handleVendorUpdated}
+        />
       )}
 
       {/* View Vendor Modal */}
