@@ -42,7 +42,7 @@ const updateQuotationStatus = async (req, res) => {
     const updatedQuotation = await Quotation.findByIdAndUpdate(
       id, 
       { status }, 
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     );
 
     if (!updatedQuotation) {

@@ -18,7 +18,8 @@ app.use('/api/vendors', vendorRoutes);
 app.use('/api/quotations', quotationRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 // Database Connection
-mongoose.connect(process.env.MONGO_URI)
+const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://localhost:27017/vendor-management';
+mongoose.connect(mongoUri)
   .then(() => console.log('✅ MongoDB Connected Successfully'))
   .catch((err) => console.error('❌ Database Connection Error:', err));
 
