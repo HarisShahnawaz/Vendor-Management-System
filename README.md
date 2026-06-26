@@ -1,7 +1,20 @@
-# Vendor Management & Quotation System
+# 🛍️ Vendor Management & Quotation System
 
 A full-stack web application for managing vendors, creating quotation requests, and comparing vendor proposals through a centralized platform.
 
+![Dashboard Preview](frontend/src/assets/dashboard.png)
+
+A modern, full-stack enterprise dashboard application built with React, Node.js, Express, and MongoDB.
+
+---
+
+## 📷 Screenshots
+
+| Dashboard | Quotation Form | Vendor Management |
+| :---: | :---: | :---: |
+| <img src="frontend/src/assets/dashboard.png" width="250" alt="Dashboard"/> | <img src="frontend/src/assets/qoutation.png" width="250" alt="Quotation Portal"/> | <img src="frontend/src/assets/venderimg.png" width="250" alt="Vendor Management"/> |
+
+---
 ## 🚀 Features
 
 ### Vendor Management
