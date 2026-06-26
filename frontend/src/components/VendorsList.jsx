@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Search, Trash2, Mail, Phone, MapPin, Eye, Edit } from 'lucide-react';
 import VendorForm from './VendorForm';
 import ViewVendorModal from './ViewVendorModal';
+import API_URL from '../config/api';
 
 export default function VendorsList() {
   const [vendors, setVendors] = useState([]);
@@ -14,7 +15,7 @@ export default function VendorsList() {
   // Fetch all vendor profiles
   const fetchVendors = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/vendors');
+      const res = await fetch(`${API_URL}/api/vendors`);
       const data = await res.json();
       if (res.ok) setVendors(data);
     } catch (err) {
@@ -37,7 +38,7 @@ export default function VendorsList() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to remove this vendor profile permanently?')) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/vendors/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_URL}/api/vendors/${id}`, { method: 'DELETE' });
       if (res.ok) setVendors(vendors.filter(v => v._id !== id));
     } catch (err) {
       console.error(err);

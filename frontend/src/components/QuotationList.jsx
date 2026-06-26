@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Plus, BarChart3, Check, X, ShieldAlert, CheckCircle2, AlertCircle, Filter, ArrowUpDown, Eye, Search } from 'lucide-react';
 import QuotationForm from './QuotationForm';
 import ViewQuotationModal from './ViewQuotationModal';
+import API_URL from '../config/api';
 
 export default function QuotationList() {
   const [quotations, setQuotations] = useState([]);
@@ -23,7 +24,7 @@ export default function QuotationList() {
 
   const fetchQuotations = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/quotations');
+      const res = await fetch(`${API_URL}/api/quotations`);
       const data = await res.json();
       if (res.ok) setQuotations(data);
     } catch (err) {
@@ -39,7 +40,7 @@ export default function QuotationList() {
 
   const handleStatusUpdate = async (id, newStatus) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/quotations/${id}/status`, {
+      const res = await fetch(`${API_URL}/api/quotations/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
@@ -72,7 +73,7 @@ export default function QuotationList() {
     
     // Continue with API call for detailed comparison matrix
     try {
-      const res = await fetch(`http://localhost:5000/api/quotations/compare?title=${encodeURIComponent(compareTitle)}`);
+      const res = await fetch(`${API_URL}/api/quotations/compare?title=${encodeURIComponent(compareTitle)}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'No proposals discovered');
       setComparisonMatrix(data);

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import API_URL from '../config/api';
 
 export default function VendorForm({ onClose, onVendorAdded, vendorToEdit, onVendorUpdated }) {
   const [formData, setFormData] = useState({
@@ -51,8 +52,8 @@ export default function VendorForm({ onClose, onVendorAdded, vendorToEdit, onVen
     setLoading(true);
     try {
       const url = isEditing 
-        ? `http://localhost:5000/api/vendors/${vendorToEdit._id}`
-        : 'http://localhost:5000/api/vendors';
+        ? `${API_URL}/api/vendors/${vendorToEdit._id}`
+        : `${API_URL}/api/vendors`;
       
       const method = isEditing ? 'PUT' : 'POST';
       

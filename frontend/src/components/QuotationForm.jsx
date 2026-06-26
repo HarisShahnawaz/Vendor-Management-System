@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
+import API_URL from '../config/api';
 
 export default function QuotationForm({ onClose, onQuotationAdded }) {
   const [vendors, setVendors] = useState([]);

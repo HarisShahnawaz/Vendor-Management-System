@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import { ArrowUpRight, ShieldAlert, Layers, CheckCircle2, Clock } from 'lucide-react';
 import VendorsList from './components/VendorsList';
-import QuotationList from './components/QuotationList'; // 1. IMPORT QUOTATION HANDLER COMPONENT
+import QuotationList from './components/QuotationList';
+import API_URL from './config/api';
 
 function App() {
   const [currentTab, setCurrentTab] = useState('dashboard');
@@ -27,7 +28,7 @@ function App() {
 
   const fetchDashboardStats = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/dashboard/stats');
+      const res = await fetch(`${API_URL}/api/dashboard/stats`);
       const data = await res.json();
       if (res.ok) {
         setStats(data);
